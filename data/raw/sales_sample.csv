@@ -1,0 +1,16 @@
+order_id,customer_id,product_name,quantity,unit_price,sale_date,payment_method,city
+1,101,Notebook,2,3500.00,2026-06-14,PIX,Maceió
+2,102,Mouse,1,80.00,2026-06-14,Cartão,Aracaju
+3,103,Teclado,-1,150.00,2026-06-15,pix,Salvador
+4,104,,3,50.00,2026/06/16,Cartao,Recife
+5,105,Monitor,1,,2026-06-17,Boleto,Maceió
+6,101,Notebook,2,3500.00,2026-06-14,PIX,Maceió
+7,102,Mouse,1,80.00,2026-06-14,Cartão,Aracaju
+8,103,Teclado,-1,150.00,2026-06-15,pix,Salvador
+9,104,,3,50.00,2026/06/16,Cartao,Recife
+10,105,Monitor,1,,2026-06-17,Boleto,Maceió
+11,106,Cadeira,2,450.00,14-06-2026,PIX,Fortaleza
+12,107,Webcam,0,200.00,2026-06-18,cartão,Natal
+13,108,Fone,1,120.00,2026-06-19,Pix,Maceió
+14,109,Mesa,1,700.00,2026-06-20,Dinheiro,Recife
+15,110,Mousepad,5,25.00,2026-06-21,PIX,
