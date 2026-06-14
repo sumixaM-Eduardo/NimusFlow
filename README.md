@@ -13,6 +13,4 @@ NimusFlow is the data engineering core of the Nimus ecosystem. It solves a real 
 - PostgreSQL
 - Docker
 
-## Architecture
 
-Raw data follows a layered pipeline before reaching its final destination:
