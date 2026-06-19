@@ -1,8 +1,17 @@
 import csv
 
-file_path = "data/raw/sales_sample.csv"
+RAW_SALES_FILE = "data/raw/sales_sample.csv"
 
-with open(file_path, "r", encoding ='utf-8') as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        print(row)
+def read_sales ():
+
+    with open(RAW_SALES_FILE, "r", encoding='utf-8') as csv_file:
+        reader = csv.DictReader(csv_file)
+        sales = list(reader)
+
+        return sales
+
+sales = read_sales()
+
+for row in sales:
+    print(row)
+
