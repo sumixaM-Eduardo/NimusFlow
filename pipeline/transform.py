@@ -1,6 +1,8 @@
 from datetime import datetime
+import logging
 
 def clean_data(sales):
+    logging.info('Cleaning data...')
     for sale in sales:
         sale['order_id'] = sale['order_id'].strip()
         sale['customer_id'] = sale['customer_id'].strip()
@@ -10,11 +12,13 @@ def clean_data(sales):
         sale['sale_date'] = sale['sale_date'].strip()
         sale['payment_method'] = sale['payment_method'].strip()
         sale['city'] = sale['city'].strip()
+    logging.info(f'{len(sales)} records cleaned')
     return sales
 
 def convert_data(sales):
     valid_sales = []
     invalid_sales = []
+    logging.info('Converting data types...')
     for sale in sales:
         try:
             sale['order_id'] = int(sale['order_id'])
@@ -42,11 +46,13 @@ def convert_data(sales):
             invalid_sales.append(sale)
             continue
         valid_sales.append(sale)
+    logging.info(f'{len(valid_sales)} valid | {len(invalid_sales)} invalid after conversion')
     return valid_sales, invalid_sales
 
 def validate_data(valid_sales, invalid_sales):
     approved_sales = []
     rejected_sales = []
+    logging.info('Validating business rules...')
     for sale in valid_sales:
         if sale['order_id'] <= 0:
             rejected_sales.append(sale)
@@ -71,5 +77,6 @@ def validate_data(valid_sales, invalid_sales):
             continue
         approved_sales.append(sale)
     rejected_sales.extend(invalid_sales)
+    logging.info(f'{len(approved_sales)} approved | {len(rejected_sales)} rejected after validation')
     return approved_sales, rejected_sales
 
