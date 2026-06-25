@@ -10,8 +10,5 @@ def read_sales ():
 
         return sales
 
-sales = read_sales()
 
-for row in sales:
-    print(row)
 
