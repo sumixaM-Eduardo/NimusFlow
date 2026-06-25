@@ -1,6 +1,6 @@
 import sqlite3
 
-pathdb = '/data/sales.db'
+pathdb = 'data/sales.db'
 
 def create_table():
     conn = sqlite3.connect(pathdb)
@@ -16,6 +16,6 @@ def insert_data(approved_sales, rejected_sales):
     for sale in approved_sales:
         cursor.execute('INSERT INTO sales VALUES(?, ?, ?, ?, ?, ?, ?, ?)', (sale['order_id'], sale['customer_id'], sale['product_name'],sale['quantity'], sale['unit_price'], sale['sale_date'], sale['payment_method'], sale['city']))
     for sale in rejected_sales:
-        cursor.execute('INSERT INTO sales VALUES(?, ?, ?, ?, ?, ?, ?, ?)',(sale['order_id'], sale['customer_id'], sale['product_name'], sale['quantity'],sale['unit_price'], sale['sale_date'], sale['payment_method'], sale['city']))
+        cursor.execute('INSERT INTO rejected_sales VALUES(?, ?, ?, ?, ?, ?, ?, ?)',(sale['order_id'], sale['customer_id'], sale['product_name'], sale['quantity'],sale['unit_price'], sale['sale_date'], sale['payment_method'], sale['city']))
     conn.commit()
     conn.close()
