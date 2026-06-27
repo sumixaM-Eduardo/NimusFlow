@@ -2,6 +2,8 @@ from pipeline.pipeline import extract
 from pipeline.transform import clean_data, validate_data, convert_data
 from pipeline.database import create_table, insert_data
 import logging
+import schedule
+import time
 
 logging.basicConfig(filename='logs/pipeline.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -21,4 +23,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    schedule.every().day.at('09:00').do(main)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)

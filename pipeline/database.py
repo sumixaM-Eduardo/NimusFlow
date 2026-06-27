@@ -1,6 +1,5 @@
 import sqlite3
 import logging
-import datetime
 pathdb = 'data/sales.db'
 
 def create_table():
