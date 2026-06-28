@@ -42,6 +42,12 @@ def get_sale_by_payment_method(payment_method: str):
     conn.close()
     return data
 
+def get_rejected():
+    conn, cursor = get_connection()
+    cursor.execute('SELECT * FROM rejected_sales')
+    data = row_to_dict(cursor)
+    return data
+
 @app.get('/sales')
 def list_sales():
     sales = get_sales()
@@ -60,4 +66,9 @@ def list_get_sales_city(city: str):
 @app.get('/sales/payment_method/{payment_method}')
 def list_get_sales_payment_method(payment_method: str):
     data = get_sale_by_payment_method(payment_method)
+    return data
+
+@app.get('/rejected')
+def list_rejected():
+    data = get_rejected()
     return data
