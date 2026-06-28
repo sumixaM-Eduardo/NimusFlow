@@ -53,7 +53,7 @@ def get_sale_by_payment_method(payment_method: str):
     conn.close()
     return data
 
-def get_rejected():
+def get_rejected_sales():
     conn, cursor = get_connection()
     cursor.execute('SELECT * FROM rejected_sales')
     data = row_to_dict(cursor)
@@ -70,6 +70,12 @@ def get_summary():
 def insert_sale(sale):
     conn, cursor = get_connection()
     cursor.execute('INSERT INTO sales VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (sale.order_id, sale.customer_id, sale.product_name, sale.quantity, sale.unit_price, sale.sale_date, sale.payment_method, sale.city))
+    conn.commit()
+    conn.close()
+
+def remove_sale(order_id: int):
+    conn, cursor = get_connection()
+    cursor.execute('DELETE FROM sales WHERE order_id = ?', (order_id,))
     conn.commit()
     conn.close()
 
@@ -90,7 +96,7 @@ def list_get_sales_payment_method(payment_method: str):
 
 @app.get('/rejected')
 def list_rejected():
-    data = get_rejected()
+    data = get_rejected_sales()
     return data
 
 @app.get('/sales/{order_id}')
@@ -108,4 +114,11 @@ def create_sale(sale: Sale):
     insert_sale(sale)
     return {
         "message": "Sale created successfully"
+    }
+
+@app.delete('/sales/{order_id}')
+def delete_sale(order_id: int):
+    remove_sale(order_id)
+    return {
+        'message': 'Sale deleted successfully'
     }
