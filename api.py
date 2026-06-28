@@ -1,5 +1,16 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 import sqlite3
+
+class Sale(BaseModel):
+    order_id: int
+    customer_id: int
+    product_name: str
+    quantity: int
+    unit_price: float
+    sale_date: str
+    payment_method: str
+    city: str
 
 path_db = 'data/sales.db'
 app = FastAPI()
@@ -46,6 +57,7 @@ def get_rejected():
     conn, cursor = get_connection()
     cursor.execute('SELECT * FROM rejected_sales')
     data = row_to_dict(cursor)
+    conn.close()
     return data
 
 def get_summary():
@@ -55,16 +67,16 @@ def get_summary():
     conn.close()
     return data
 
+def insert_sale(sale):
+    conn, cursor = get_connection()
+    cursor.execute('INSERT INTO sales VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (sale.order_id, sale.customer_id, sale.product_name, sale.quantity, sale.unit_price, sale.sale_date, sale.payment_method, sale.city))
+    conn.commit()
+    conn.close()
 
 @app.get('/sales')
 def list_sales():
     sales = get_sales()
     return sales
-
-@app.get('/sales/{order_id}')
-def list_get_sales_id(order_id: int):
-    data = get_sale_by_id(order_id)
-    return data
 
 @app.get('/sales/city/{city}')
 def list_get_sales_city(city: str):
@@ -81,7 +93,19 @@ def list_rejected():
     data = get_rejected()
     return data
 
+@app.get('/sales/{order_id}')
+def list_get_sales_id(order_id: int):
+    data = get_sale_by_id(order_id)
+    return data
+
 @app.get('/summary')
 def summary():
     data = get_summary()
     return data
+
+@app.post('/sales')
+def create_sale(sale: Sale):
+    insert_sale(sale)
+    return {
+        "message": "Sale created successfully"
+    }
