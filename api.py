@@ -48,6 +48,14 @@ def get_rejected():
     data = row_to_dict(cursor)
     return data
 
+def get_summary():
+    conn, cursor = get_connection()
+    cursor.execute('SELECT(SELECT COUNT(*) FROM sales)+(SELECT COUNT(*) FROM rejected_sales) AS total_records,(SELECT SUM(unit_price) FROM sales) AS total_sum;')
+    data = row_to_dict(cursor)
+    conn.close()
+    return data
+
+
 @app.get('/sales')
 def list_sales():
     sales = get_sales()
@@ -71,4 +79,9 @@ def list_get_sales_payment_method(payment_method: str):
 @app.get('/rejected')
 def list_rejected():
     data = get_rejected()
+    return data
+
+@app.get('/summary')
+def summary():
+    data = get_summary()
     return data
