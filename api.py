@@ -32,6 +32,13 @@ def get_sale_by_city(city: str):
     data = row_to_dict(cursor)
     return data
 
+def get_sale_by_payment_method(payment_method: str):
+    conn = sqlite3.connect(path_db)
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM sales WHERE payment_method = ?', (payment_method,))
+    data = row_to_dict(cursor)
+    return data
+
 @app.get('/sales')
 def list_sales():
     sales = get_sales()
@@ -46,3 +53,10 @@ def list_get_sales_id(order_id: int):
 def list_get_sales_city(city: str):
     data = get_sale_by_city(city)
     return data
+
+@app.get('/sales/payment_method/{payment_method}')
+def list_get_sales_payment_method(payment_method: str):
+    data = get_sale_by_payment_method(payment_method)
+    return data
+
+
