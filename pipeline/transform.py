@@ -79,4 +79,3 @@ def validate_data(valid_sales, invalid_sales):
     rejected_sales.extend(invalid_sales)
     logging.info(f'{len(approved_sales)} approved | {len(rejected_sales)} rejected after validation')
     return approved_sales, rejected_sales
-
